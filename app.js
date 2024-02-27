@@ -6,9 +6,9 @@ const morgan = require('morgan');
 
 const app = express();
 
-
-
-// 1 ) MIDDLEWARES 
+// 1 ) MIDDLEWARES
+ app.use(morgan('dev'));
+ 
 app.use(express.json());
 
 app.use((req,res, next) => {
