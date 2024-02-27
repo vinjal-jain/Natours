@@ -4,19 +4,30 @@ const { get } = require('http');
 
 
 const app = express();
-
 app.use(express.json());
+
+app.use((req,res, next) => {
+    console.log('Hello from the middleware.....');
+    next();
+})
+
+app.use((req,res, next) => {
+    req.requestedTime = new Date().toISOString();
+    next();
+})
 
 
 const tours = JSON.parse(
     fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
 );
  const getAllTours = (req,res) => {
+    console.log(req.requestedTime);
     res.status(200).json({
         status: 'success',
+        requestedAt : req.requestedTime,
         results: tours.length,
         data: {
-            tour
+            tours
         }
     })
 }
